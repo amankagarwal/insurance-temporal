@@ -1,0 +1,12 @@
+# Ignore bin and obj folders
+**/bin/
+**/obj/
+
+# Ignore user-specific files
+*.user
+*.suo
+
+# Ignore logs
+*.log
+
+*.idea
