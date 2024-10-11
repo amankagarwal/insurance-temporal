@@ -10,7 +10,6 @@ public class BillingWorkflow
     [WorkflowRun]
     public async Task<BillingResponse> RunAsync(BillingRequest request)
     {
-        // Wait for 30 seconds before sending the signal to the parent workflow
         await Workflow.ExecuteActivityAsync(
             (IActivities act) => act.ProcessFirstPaymentAsync(request),
             new ActivityOptions
@@ -34,8 +33,6 @@ public class BillingWorkflow
             await Workflow.DelayAsync(TimeSpan.FromSeconds(10));
 
             // Charge the customer
-            // Issue: Since I am running a single worker, it will keep waiting for someone to pick up 
-            // this activity. This will not work
             await Workflow.ExecuteActivityAsync(
                 (IActivities act) => act.ProcessPaymentAsync(request),
                 new ActivityOptions
